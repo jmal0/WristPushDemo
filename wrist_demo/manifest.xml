@@ -1,0 +1,16 @@
+<package>
+  <description brief="wrist_demo">
+    The Waist demo package is a simple ros package that contains one node that will be used
+    in conjunction with the maestro package to move hubo's arm back and forth using the wrist
+    force torque sensors. 
+  </description>
+  <author>Eric Rock</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <!-- <url>http://ros.org/wiki/wrist_demo</url> -->
+  <depend package="maestro"/>
+  <depend package="hubomsg"/>
+
+</package>
+
+

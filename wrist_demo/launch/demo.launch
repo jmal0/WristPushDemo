@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<launch>
+  <node name="wrist_push_demo" pkg="wrist_demo" type="wrist_demo.py" output="screen"> 
+  </node>
+
+</launch>
