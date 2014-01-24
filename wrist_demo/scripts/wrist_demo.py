@@ -10,7 +10,7 @@ class wrist_demo:
 
     def __init__( self ):
 
-        rospy.init_node("face_center_controller")
+        rospy.init_node("wrist_push_controller")
         rospy.Subscriber("Maestro/Message", MaestroMessage, self.update)
         self.pub = rospy.Publisher("Maestro/Control", PythonMessage)
        
@@ -113,14 +113,15 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
         if demo.state == demo.CALIB_LOW:
             if demo.i < 0:
-                demo.pub.publish("","InitializeSensors","","")
-                rospy.sleep(demo.sleepVal)
+                demo.setOut()
                 if shouldPrint:
                     print "Press <Enter> to begin rest calibration:"
                     shouldPrint = False
                 if input_available():
                     userInput = raw_input()
                     demo.i = 0
+                    demo.pub.publish("","InitializeSensors","","")
+                    rospy.sleep(demo.sleepVal)
             elif demo.i < 10:
                 demo.pub.publish("RWT","Get","0","f_z")
                 rospy.sleep(demo.sleepVal)
@@ -143,8 +144,8 @@ if __name__ == '__main__':
             elif demo.i == 10:
                 demo.i = -1
                 band = demo.highVal - demo.lowVal
-                demo.LOW_THRESHOLD = demo.lowVal + (.15 * band)
-                demo.MID_LOW_THRESHOLD = demo.LOW_THRESHOLD + (.30 * band)
+                demo.LOW_THRESHOLD = demo.lowVal + (.20 * band)
+                demo.MID_LOW_THRESHOLD = demo.LOW_THRESHOLD + (.25 * band)
                 demo.MID_HIGH_THRESHOLD = demo.MID_LOW_THRESHOLD + (.30 * band)
                 demo.HIGH_THRESHOLD = demo.MID_HIGH_THRESHOLD + (.25 * band)
                 print str(demo.lowVal) + " " + str(demo.highVal)
