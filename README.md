@@ -26,6 +26,7 @@ Preconditions:
 - Motors must already be homed and enabled in Maestro
 - Motors RSP and REP must be enabled
 - Force Torque Sensor RWT must be available
+
 Run:
 - run 'roslaunch wrist_demo demo.launch' 
 - Wait for the robot arm to extend fully
