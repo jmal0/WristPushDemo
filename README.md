@@ -30,9 +30,9 @@ Preconditions:
 Run:
 - run 'roslaunch wrist_demo demo.launch' 
 - Wait for the robot arm to extend fully
-- Press <Enter> to calibrate low
-- While pushing the wrist in the direction of the arm, press <Enter> to calibrate high
+- Press `Enter` to calibrate low
+- While pushing the wrist in the direction of the arm, press `Enter` to calibrate high
 - Push the wrist in to move the arm inwards, and release to make the arm extend.
-- Exit the demo by pressing <Enter> a third time. The arm will return to ground state.
+- Exit the demo by pressing `Enter` a third time. The arm will return to ground state.
 - If the program is interrupted (via a break, for example) the arm will not return to ground state.
 
