@@ -6,13 +6,15 @@ from hubomsg.msg import *
 import sys
 import select
 
+ID_NUM = 789
+
 class wrist_demo:
 
     def __init__( self ):
 
         rospy.init_node("wrist_push_controller")
         rospy.Subscriber("Maestro/Message", MaestroMessage, self.update)
-        self.pub = rospy.Publisher("Maestro/Control", PythonMessage)
+        self.pub = rospy.Publisher("Maestro/Control", MaestroCommand)
        
         self.LOW_THRESHOLD = -8
 
@@ -52,17 +54,17 @@ class wrist_demo:
         self.ALPHA = .1
 
     def setOut(self):
-        self.pub.publish("RSP REP", "position position", str(self.RSP_EXTENDED) + " " + str(self.REP_EXTENDED), "")
+        self.pub.publish("RSP REP", "position position", str(self.RSP_EXTENDED) + " " + str(self.REP_EXTENDED), "", ID_NUM)
         self.last = self.OUT
         rospy.sleep(self.sleepVal)
 
     def setStay(self):
-        self.pub.publish("RSP REP","position position", str(self.RSP_pos) + " " + str(self.REP_pos), "")
+        self.pub.publish("RSP REP","position position", str(self.RSP_pos) + " " + str(self.REP_pos), "", ID_NUM)
         self.last = self.STAY
         rospy.sleep(self.sleepVal)
 
     def setIn(self):
-        self.pub.publish("RSP REP","position position", str(self.RSP_RETRACTED) + " " + str(self.REP_RETRACTED), "")
+        self.pub.publish("RSP REP","position position", str(self.RSP_RETRACTED) + " " + str(self.REP_RETRACTED), "", ID_NUM)
         self.last = self.IN
         rospy.sleep(self.sleepVal)
 
@@ -120,10 +122,10 @@ if __name__ == '__main__':
                 if input_available():
                     userInput = raw_input()
                     demo.i = 0
-                    demo.pub.publish("","InitializeSensors","","")
+                    demo.pub.publish("","InitializeSensors","","", ID_NUM)
                     rospy.sleep(demo.sleepVal)
             elif demo.i < 10:
-                demo.pub.publish("RWT","Get","0","f_z")
+                demo.pub.publish("RWT","Get","0","f_z", ID_NUM)
                 rospy.sleep(demo.sleepVal)
             elif demo.i == 10:
                 demo.i = -1
@@ -138,7 +140,7 @@ if __name__ == '__main__':
                     userInput = raw_input()
                     demo.i = 0
             elif demo.i < 10:
-                demo.pub.publish("RWT","Get","0","f_z")
+                demo.pub.publish("RWT","Get","0","f_z", ID_NUM)
                 rospy.sleep(demo.sleepVal)
 
             elif demo.i == 10:
@@ -154,16 +156,16 @@ if __name__ == '__main__':
                 demo.state = demo.DEMO
         else:
 
-            demo.pub.publish("RSP","Get","0","position")
+            demo.pub.publish("RSP","Get","0","position", ID_NUM)
             rospy.sleep(demo.sleepVal)
-            demo.pub.publish("REP","Get","0","position")
+            demo.pub.publish("REP","Get","0","position", ID_NUM)
             rospy.sleep(demo.sleepVal)
-            demo.pub.publish("RWT","Get","0","f_z")
+            demo.pub.publish("RWT","Get","0","f_z", ID_NUM)
             rospy.sleep(demo.sleepVal)
             
             if input_available():
                 rospy.sleep(1)
-                demo.pub.publish("RSP REP","position position", "0 0", "")
+                demo.pub.publish("RSP REP","position position", "0 0", "", ID_NUM)
                 rospy.sleep(demo.sleepVal)
                 sys.exit(0)
 
